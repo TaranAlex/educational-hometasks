@@ -1,0 +1,272 @@
+//Работа с файлами
+
+//1)
+/*$test = 'Hello, World!';
+file_put_contents('./test.txt', $test);
+
+echo "SUCCESS";
+echo "<br>";
+
+//2)
+$fp = fopen('test.txt', 'r');
+
+$data = file_get_contents('./test.txt');
+echo $data;*/
+
+//3)
+//rename('./test.txt', './mir.txt');
+
+//4)
+//copy('./mir.txt', './world.txt');
+
+//5)
+/*$filesize = filesize('./world.txt');
+
+$kByte = $filesize/1024;
+$MByte = $kByte/1024;
+$GByte = $MByte/1024;
+
+echo $filesize.' '. 'byte';
+echo '<br>';
+echo $kByte.' '. 'kByte';
+echo '<br>';
+echo $MByte.' '. 'MByte';
+echo '<br>';
+echo $GByte.' '. 'GByte';
+echo '<br>';*/
+
+//6)
+//unlink('./world.txt');
+
+//7)
+/*$exists = file_exists('./world.txt');
+$exists1 = file_exists('./mir.txt');
+
+function existsFile($file){
+	if ($file == true) {
+		echo 'file exists';
+	}else	echo 'file does not exist ';
+};
+
+existsFile($exists);
+echo '<br>';
+existsFile($exists1);*/
+
+
+
+//Работа с папками, mkdir, rmdir
+
+//1)
+//mkdir('./test');
+
+//2)
+//rename('./new_folder', './new_folder_jhkjhkjh');
+//rename('./test', './www');
+
+//3)
+//rmdir('./www');
+
+//4)
+/*mkdir('./test');
+$folders = ['new', 'new1', 'new2', 'new3', 'new4'];
+foreach ($folders as $value) {
+	mkdir('./test/'.$value);
+}*/
+
+
+//На scandir, is_dir, is_file, PHP_EOL
+
+//1)
+//var_dump(scandir('./test'));
+//print_r(scandir('./test'));
+
+//2
+/*$files = [];
+$folder = scandir('./test');
+foreach ($folder as $value) {
+	if (is_file('./test/'.$value)) {
+		$files[] = $value;
+	}
+}*/
+//var_dump($files);
+//print_r($files);
+
+//3)
+/*$files = [];
+$folder = scandir('./test');
+foreach ($folder as $value) {
+	if (is_file('./test/'.$value)) {
+		$files[] = file_get_contents('./test/'.$value);
+	}
+}
+//var_dump($files);
+print_r($files);*/
+
+//4)
+/*$files = [];
+$folder = scandir('./test');
+foreach ($folder as $value) {
+	if (is_file('./test/'.$value) && preg_match('#.txt$#', $value)) {
+		$files[] = $value;
+	}
+}
+//var_dump($files);
+print_r($files);*/
+
+//5)
+/*$folder = scandir('./test');
+foreach ($folder as $value) {
+	if (is_file('./test/'.$value) && preg_match('#.txt$#', $value)) {
+		$content = file_get_contents('./test/'.$value);
+		file_put_contents('./test/'.$value, './test/'.$value.PHP_EOL.$content);
+	}
+}*/
+
+//6)
+/*$folders = [];
+	function show_dir($dir_name)
+	{
+		$dir = scandir($dir_name);
+		unset( $dir[0], $dir[1] );
+			foreach($dir as $value) {
+				$str = $dir_name;
+				if(is_dir($dir_name.'/'.$value)) {
+					$str .= '/'.$value;
+					$folders[$value]= show_dir($str);
+				}
+			}
+		return $folders;
+	}
+print_r(show_dir('./test'));*/
+
+//7)
+/*$files = [];
+	function show_dir($dir_name)
+	{
+		$dir = scandir($dir_name);
+		unset($dir[0], $dir[1]);
+			foreach($dir as $value) {
+				$str = $dir_name;
+				if(is_file($dir_name.'/'.$value)) {
+					$files[$value]= file_get_contents($dir_name.'/'.$value);
+				}
+				if(is_dir($dir_name.'/'.$value)) {
+					$str .= '/'.$value;
+					$files[$value]= show_dir($str);
+				}
+			}
+		return $files;
+	}
+print_r(show_dir('./test'));*/
+
+//8)
+/*$files = [];
+	function show_dir($dir_name)
+	{
+		$dir = scandir($dir_name);
+		unset($dir[0], $dir[1]);
+			foreach($dir as $value) {
+				$str = $dir_name;
+				if(is_file($dir_name.'/'.$value)) {
+					$text_file = file_get_contents($dir_name.'/'.$value);
+					file_put_contents($dir_name.'/'.$value, './test/'.$value.PHP_EOL.$text_file);
+					$files [$value]= file_get_contents($dir_name.'/'.$value);
+				}
+				if(is_dir($dir_name.'/'.$value)) {
+					$str .= '/'.$value;
+					$files [$value]= show_dir($str);
+				}
+			}
+		return $files;
+	}
+print_r(show_dir('./test'));*/
+
+
+//Задачи
+
+//2)
+/*$dir = scandir('./test');
+	foreach($dir as $value) {
+		if(is_file('./test/'.$value) && filesize('test/'.$value)/1024/1024 > 1) {
+			unlink('./test/'.$value);
+		}
+	}*/
+
+//3)
+	/*$dir = scandir('./test');
+	$sum = 0;
+	foreach($dir as $value) {
+		if(is_file('./test/'.$value)) {
+			$sum += filesize('./test/'.$value)/1024/1024;
+		}
+	}
+	echo $sum.' MByte';*/
+
+
+//4)
+	/*$sum = 0;
+	$array = [];
+	$list = [];
+	function show_dir($dir_name)
+	{
+		$dir = scandir($dir_name);
+		unset($dir[0], $dir[1]);
+			foreach($dir as $value) {
+				$str = $dir_name;
+				if(is_file($dir_name.'/'.$value)) {
+					$sum += filesize($dir_name.'/'.$value)/1024/1024;
+				}
+				$list[$dir_name.'/'.$value] = $sum;
+							
+				if(is_dir($dir_name.'/'.$value)) {
+					$str .= '/'.$value;
+					$array [$value]= show_dir($str);
+				}
+			}
+		return $list;
+	}
+	print_r(show_dir('./test'));	*/
+
+
+class CSV {
+
+
+	private $_csv_file = null;
+
+
+	public function __construct($csv_file) {
+
+        if (file_exists($csv_file)) { //Если файл существует
+            $this->_csv_file = $csv_file; //Записываем путь к файлу в переменную
+        }
+        else{
+        	trigger_error('CSV: "'.$csv_file.'" does not exist.', E_USER_ERROR);
+        	die();
+        }
+    }
+
+    public function getCSV() {
+
+        $handle = fopen($this->_csv_file, "r"); //Открываем csv для чтения
+ 
+        $array_line_full = []; //Массив будет хранить данные из csv
+        //Проходим весь csv-файл, и читаем построчно.
+        while (($line = fgetcsv($handle)) !== FALSE) { 
+            $array_line_full[] = $line; //Записываем строчки в массив
+        }
+        fclose($handle); //Закрываем файл
+        return $array_line_full; //Возвращаем прочтенные данные
+    }
+
+    public function setCSV(Array $csv) {
+        //Открываем csv для до-записи 
+        
+        $handle = fopen($this->_csv_file, "a"); 
+ 
+        foreach ($csv as $value) { //Проходим массив
+            //Записываем
+            fputcsv($handle, $value); 
+        }
+        fclose($handle); //Закрываем
+    }
+}
